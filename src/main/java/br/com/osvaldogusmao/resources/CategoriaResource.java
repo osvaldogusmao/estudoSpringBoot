@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.osvaldogusmao.domain.Categoria;
 import br.com.osvaldogusmao.services.CategoriaService;
 
-@RestController	
+@RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
@@ -22,6 +22,5 @@ public class CategoriaResource {
 		Categoria categoria = categoriaService.buscar(id);
 		return ResponseEntity.ok().body(categoria);
 	}
-	
 
 }

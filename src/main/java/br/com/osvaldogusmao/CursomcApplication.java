@@ -1,5 +1,6 @@
 package br.com.osvaldogusmao;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,19 @@ import br.com.osvaldogusmao.domain.Cidade;
 import br.com.osvaldogusmao.domain.Cliente;
 import br.com.osvaldogusmao.domain.Endereco;
 import br.com.osvaldogusmao.domain.Estado;
+import br.com.osvaldogusmao.domain.Pagamento;
+import br.com.osvaldogusmao.domain.PagamentoComCartao;
+import br.com.osvaldogusmao.domain.Pedido;
 import br.com.osvaldogusmao.domain.Produto;
+import br.com.osvaldogusmao.domain.enums.EstadoPagamento;
 import br.com.osvaldogusmao.domain.enums.TipoCliente;
 import br.com.osvaldogusmao.repositories.CategoriaRepository;
 import br.com.osvaldogusmao.repositories.CidadeRepository;
 import br.com.osvaldogusmao.repositories.ClienteRepository;
 import br.com.osvaldogusmao.repositories.EnderecoRepository;
 import br.com.osvaldogusmao.repositories.EstadoRepository;
+import br.com.osvaldogusmao.repositories.PagamentoRepository;
+import br.com.osvaldogusmao.repositories.PedidoRepository;
 import br.com.osvaldogusmao.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +43,10 @@ public class CursomcApplication implements CommandLineRunner {
 	private EnderecoRepository enderecoRepository;
 	@Autowired
 	private ClienteRepository clienteRepository;
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -94,6 +105,17 @@ public class CursomcApplication implements CommandLineRunner {
 
 		clienteRepository.saveAll(Arrays.asList(cliente));
 		enderecoRepository.saveAll(Arrays.asList(enderecoUm, enderecoDois));
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Pedido ped1 = new Pedido(null, dateFormat.parse("03/04/2019 12:20:00"), cliente, enderecoUm);
+
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pag1);
+
+		cliente.getPedidos().addAll(Arrays.asList(ped1));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1));
+		pagamentoRepository.saveAll(Arrays.asList(pag1));
 
 	}
 
