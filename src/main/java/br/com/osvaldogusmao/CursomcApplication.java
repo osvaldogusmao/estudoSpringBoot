@@ -71,6 +71,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 		Estado estado1 = new Estado(null, "Minas Gerais");
 		Estado estado2 = new Estado(null, "São Paulo");
+		Estado estado3 = new Estado(null, "Pernambuco");
 
 		Cidade cidade1 = new Cidade(null, "Uberlândia");
 		Cidade cidade2 = new Cidade(null, "São Paulo");
@@ -86,7 +87,7 @@ public class CursomcApplication implements CommandLineRunner {
 		categoriaReporitory.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(prod1, prod2, prod3));
 
-		estadoRepository.saveAll(Arrays.asList(estado1, estado2));
+		estadoRepository.saveAll(Arrays.asList(estado1, estado2, estado3));
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 
 		Cliente cliente = new Cliente(null, "Maria Silva", "maria.silva@gmail.com", "12345678912",
